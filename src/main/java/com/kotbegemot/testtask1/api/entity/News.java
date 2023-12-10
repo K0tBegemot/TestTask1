@@ -11,6 +11,9 @@ import org.hibernate.id.enhanced.SequenceStyleGenerator;
 
 import java.time.LocalDateTime;
 
+/**
+ * Entity class to save news
+ */
 @Entity
 @Table(name = "NEWS_TABLE", indexes = {@Index(name = "header_index", columnList = "news_header", unique = false)})
 @NamedEntityGraph(
@@ -24,6 +27,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 public class News {
+    /**
+     * unique identifier of news
+     */
     @Id
     @GeneratedValue(generator = "news-sequence")
     @GenericGenerator(
@@ -38,15 +44,28 @@ public class News {
     @Column(name = "news_id", nullable = true)
     @Getter @Setter
     private Long id;
+    /**
+     * Text header of news
+     */
     @Column(name = "news_header", nullable = false)
     @Getter @Setter
     private String header;
+    /**
+     * Publication time of news
+     */
     @Column(name = "news_pub_time", nullable = false)
     @Getter @Setter
     private LocalDateTime publicationTime;
+    /**
+     * Text of news
+     */
     @Column(name = "news_text", nullable = false)
     @Getter @Setter
     private String text;
+    /**
+     * Image of news
+     * @see com.kotbegemot.testtask1.api.entity.Image
+     */
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "image_id", referencedColumnName = "id")
     @Getter @Setter

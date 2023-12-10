@@ -3,28 +3,25 @@ package com.kotbegemot.testtask1.controller;
 import com.kotbegemot.testtask1.api.dto.EditNewsDTO;
 import com.kotbegemot.testtask1.api.dto.NewsDTO;
 import com.kotbegemot.testtask1.api.dto.PagedNewsDTO;
-import com.kotbegemot.testtask1.api.entity.News;
 import com.kotbegemot.testtask1.service.NewsService;
 import com.kotbegemot.testtask1.service.implementation.NewsServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
-@Controller
+/**
+ * Controller to serve news content
+ */
+@RestController
 @RequestMapping("/news")
 public class NewsController
 {
@@ -39,9 +36,17 @@ public class NewsController
     {
         newsService = newsService1;
     }
+
+    /**
+     *
+     * @param pageSize
+     * @param pageNumber
+     * @param model
+     * @return
+     */
     @GetMapping(path = "/mainPage", produces = MediaType.TEXT_HTML_VALUE)
-    public String getNewsLineMainPage(@RequestParam(name = "pageSize", required = false) @NotNull @Positive Integer pageSize,
-                                      @RequestParam(name = "pageNumber", required = false) @NotNull @PositiveOrZero Integer pageNumber,
+    public String getNewsLineMainPage(@RequestParam(name = "pageSize", required = false, defaultValue = SMALL_PAGE_SIZE) @NotNull @Positive Integer pageSize,
+                                      @RequestParam(name = "pageNumber", required = false, defaultValue = DEFAULT_PAGE_NUMBER) @NotNull @PositiveOrZero Integer pageNumber,
                                       Model model)
     {
         PagedNewsDTO news = newsService.getPageByNumber(pageNumber, pageSize);
@@ -50,11 +55,23 @@ public class NewsController
         return "news";
     }
 
+    /**
+     *
+     * @param model
+     * @return
+     */
     @GetMapping(path = "/addPage", produces = MediaType.TEXT_HTML_VALUE)
     public String getNewsAddPage(Model model)
     {
         return "addOrEdit";
     }
+
+    /**
+     *
+     * @param id
+     * @param model
+     * @return
+     */
     @GetMapping(path = "/editPage", produces = MediaType.TEXT_HTML_VALUE)
     public String getNewsEditPage(@RequestParam(name = "id", required = true)@NotNull @PositiveOrZero Long id, Model model)
     {
@@ -62,6 +79,15 @@ public class NewsController
         model.addAttribute("new_entity", news);
         return "addOrEdit";
     }
+
+    /**
+     *
+     * @param header
+     * @param text
+     * @param image
+     * @param request
+     * @return
+     */
     @PostMapping(path = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ModelAndView addNews(@RequestParam(name = "header", required = true)@NotNull String header,
                                 @RequestParam(name = "text", required = true)@NotNull String text,
@@ -73,6 +99,16 @@ public class NewsController
                 View.RESPONSE_STATUS_ATTRIBUTE, HttpStatus.FOUND);
         return new ModelAndView("redirect:/news/mainPage");
     }
+
+    /**
+     *
+     * @param id
+     * @param header
+     * @param text
+     * @param image
+     * @param request
+     * @return
+     */
     @PostMapping(path = "/edit", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ModelAndView editNews(@RequestParam(name = "id", required = true)@NotNull @PositiveOrZero Long id,
                          @RequestParam(name = "header", required = true)@NotNull String header,
@@ -87,6 +123,11 @@ public class NewsController
         return new ModelAndView("redirect:/news/mainPage");
     }
 
+    /**
+     *
+     * @param imageId
+     * @return
+     */
     @GetMapping(path = "/image/{imageId}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public @ResponseBody byte[] getImage(@PathVariable(name = "imageId") @NotNull @PositiveOrZero Long imageId)
     {

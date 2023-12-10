@@ -15,6 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+/**
+ * Entity class to save image of news
+ */
 @Entity
 @Table(name = "IMAGE_TABLE")
 @NoArgsConstructor
@@ -31,6 +34,9 @@ public class Image
             logger.warn("Image will be lost due to IOException. Warning: ", e);
         }
     }
+    /**
+     *Unique identifier of image in database
+     */
     @Id
     @GeneratedValue(generator = "image-sequence")
     @GenericGenerator(
@@ -45,6 +51,9 @@ public class Image
     @Column(name = "id", nullable = true)
     @Getter @Setter
     private Long id;
+    /**
+     * Blob image in database
+     */
     @Column(name = "image", nullable = true)
     @Lob
     @Getter @Setter

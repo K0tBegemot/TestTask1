@@ -37,9 +37,23 @@ spring:
         hbm2ddl:
           auto: create
   data:
-#    redis:
-#      host: ${REDIS_HOST:localhost}
-#      port: ${REDIS_PORT:6379}
 #logging:
 #  level:
 #    root: DEBUG
+api:
+  common:
+    version: 1.0.0
+    title: Newsline API
+    description: Newsline API
+    externalDocDesc: MY WIKI PAGE
+    externalDocUrl: MY WIKI URL
+    contact:
+      name: KotBegemot
+      url: GitHub
+      email: InvalidEmail
+springdoc:
+  swagger-ui.path: /openapi/swagger-ui.html
+  api-docs.path: /openapi/v3/api-docs
+  packagesToScan: com.kotbegemot.testtask1
+  pathsToMatch: /**
+  model-and-view-allowed: true
