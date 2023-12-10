@@ -1,0 +1,45 @@
+server:
+  port: 8080
+  ssl:
+    enabled: true
+    key-store-type: PKCS12
+    key-store: classpath:keystore/keystore.p12
+    key-store-password: kotbegemot
+    protocol: TLS
+    enabled-protocols: TLSv1.2
+database:
+  host: ${SQL_DATABASE_HOST:192.168.0.1}
+  port: ${SQL_DATABASE_PORT:5432}
+  name: ${SQL_DATABASE_NAME:testtask}
+spring:
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 25MB
+  datasource:
+    url: jdbc:postgresql://${database.host}:${database.port}/${database.name}
+    username: ${SQL_DATABASE_USER:testtaskadmin}
+    password: ${SQL_DATABASE_PASSWORD:AllBeesLoveHoney}
+    driverClassName: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 25
+  jpa:
+    generate-ddl: true
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 10
+          fetch_size: 30
+        max_fetch_depth: 3
+        show-sql: true
+        format-sql: false
+        use_sql_comments: false
+        hbm2ddl:
+          auto: create
+  data:
+#    redis:
+#      host: ${REDIS_HOST:localhost}
+#      port: ${REDIS_PORT:6379}
+#logging:
+#  level:
+#    root: DEBUG
