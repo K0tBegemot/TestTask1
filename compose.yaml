@@ -8,7 +8,8 @@ services:
       POSTGRES_USER: ${SQL_DATABASE_USER}
       POSTGRES_DB: ${SQL_DATABASE_NAME}
   backend:
-    build: ./
+    build:
+      context: ./
     ports:
       - "${SERVER_EXTERNAL_PORT}:${SERVER_PORT}"
     environment:

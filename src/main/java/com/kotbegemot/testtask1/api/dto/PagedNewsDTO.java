@@ -1,5 +1,6 @@
 package com.kotbegemot.testtask1.api.dto;
 
+import com.kotbegemot.testtask1.controller.NewsViewController;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -10,7 +11,8 @@ import java.util.List;
 
 /**
  * DTO used to populate template with several objects of type {@link com.kotbegemot.testtask1.api.dto.NewsDTO}
- * @see com.kotbegemot.testtask1.controller.NewsController#getNewsLineMainPage(Integer, Integer, Model)
+ *
+ * @see NewsViewController#getNewsLineMainPage(Integer, Integer, Model)
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,26 +21,30 @@ public class PagedNewsDTO {
     /**
      * List of news on this page
      */
-    @Getter @Setter
+    @Getter
+    @Setter
     private List<NewsDTO> news;
     /**
      * Number of news on this page
      */
-    @Getter @Setter
+    @Getter
+    @Setter
     @NotNull
     @Positive
     private Integer size;
     /**
      * Zero based page number
      */
-    @Getter @Setter
+    @Getter
+    @Setter
     @NotNull
     @PositiveOrZero
     private Integer number;
     /**
      * Number of all pages. Guaranteed greater than or equal to {@link com.kotbegemot.testtask1.api.dto.PagedNewsDTO#number}
      */
-    @Getter @Setter
+    @Getter
+    @Setter
     @NotNull
     @PositiveOrZero
     private Integer allPageNumber;

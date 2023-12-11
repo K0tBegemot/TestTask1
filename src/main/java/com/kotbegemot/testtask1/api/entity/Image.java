@@ -22,20 +22,19 @@ import java.io.IOException;
 @Table(name = "IMAGE_TABLE")
 @NoArgsConstructor
 @ToString(exclude = "image")
-public class Image
-{
+public class Image {
     private static final Logger logger = LoggerFactory.getLogger(Image.class);
-    public Image(MultipartFile image1)
-    {
-        try{
+
+    public Image(MultipartFile image1) {
+        try {
             image = image1.getBytes();
-        }catch (IOException e)
-        {
+        } catch (IOException e) {
             logger.warn("Image will be lost due to IOException. Warning: ", e);
         }
     }
+
     /**
-     *Unique identifier of image in database
+     * Unique identifier of image in database
      */
     @Id
     @GeneratedValue(generator = "image-sequence")
@@ -49,13 +48,15 @@ public class Image
             }
     )
     @Column(name = "id", nullable = true)
-    @Getter @Setter
+    @Getter
+    @Setter
     private Long id;
     /**
      * Blob image in database
      */
     @Column(name = "image", nullable = true)
     @Lob
-    @Getter @Setter
+    @Getter
+    @Setter
     private byte[] image;
 }

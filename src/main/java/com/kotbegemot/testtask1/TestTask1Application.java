@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class TestTask1Application {
     /**
      * Spring Boot autoconfig method
+     *
      * @param args Command line arguments
      */
     public static void main(String[] args) {

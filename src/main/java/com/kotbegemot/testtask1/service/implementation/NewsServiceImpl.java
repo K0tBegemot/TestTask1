@@ -1,7 +1,7 @@
 package com.kotbegemot.testtask1.service.implementation;
 
-import com.kotbegemot.testtask1.api.dto.EditNewsDTO;
 import com.kotbegemot.testtask1.api.dto.NewsDTO;
+import com.kotbegemot.testtask1.api.dto.NewsFormDTO;
 import com.kotbegemot.testtask1.api.dto.PagedNewsDTO;
 import com.kotbegemot.testtask1.api.entity.Image;
 import com.kotbegemot.testtask1.api.entity.News;
@@ -29,16 +29,15 @@ public class NewsServiceImpl implements NewsService {
     private NewsRepository newsRepository;
     private ImageRepository imageRepository;
     private NewsMapper mapper;
-    public NewsServiceImpl(NewsRepository newsRepository1, ImageRepository imageRepository1, NewsMapper mapper1)
-    {
+
+    public NewsServiceImpl(NewsRepository newsRepository1, ImageRepository imageRepository1, NewsMapper mapper1) {
         newsRepository = newsRepository1;
         imageRepository = imageRepository1;
         mapper = mapper1;
     }
 
     @Override
-    public PagedNewsDTO getPageByNumber(Integer pageNumber, Integer pageSize)
-    {
+    public PagedNewsDTO getPageByNumber(Integer pageNumber, Integer pageSize) {
         Pageable page = PageRequest.of(pageNumber, pageSize);
         Page<News> pageResult = newsRepository.findAll(page);
         logger.debug("{}", pageResult.getContent());
@@ -47,29 +46,24 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public NewsDTO getNewsById(Long id)
-    {
+    public NewsDTO getNewsById(Long id) {
         Optional<News> news = newsRepository.findById(id);
-        if(news.isPresent())
-        {
+        if (news.isPresent()) {
             return mapper.newsToDTO(news.get());
         }
         throw new NewsNotFoundException();
     }
 
     @Override
-    public void saveOrUpdateNews(EditNewsDTO newsDTO)
-    {
+    public void saveOrUpdateNews(NewsFormDTO newsDTO) {
         News news = mapper.addNewsDTOToEntity(newsDTO);
         newsRepository.saveAndFlush(news);
     }
 
     @Override
-    public Image getImage(Long imageId)
-    {
+    public Image getImage(Long imageId) {
         Optional<Image> image = imageRepository.findById(imageId);
-        if(image.isPresent())
-        {
+        if (image.isPresent()) {
             return image.get();
         }
         throw new ImageNotFoundException();

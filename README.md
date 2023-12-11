@@ -39,3 +39,14 @@ All env variables, described in the file and their description:
 <code>docker compose up</code><br>or<br><code>docker compose up -d </code><br>for container detached mode</p>
 <p>after this the service will be started</p>
 <h3><a name="documentation"></a>Instruction for generating documentation</h3>
+<h4>Generate Javadoc documentation</h4>
+<p>To generate documentation, the following programs are required:</p>
+<ul>
+<li>Maven</li>
+</ul>
+<p>You need to execute the command:</p>
+<code>mvn clean lombok:delombok javadoc:javadoc</code>
+<p>and the documentation will appear in the folder ${PROJECT_ROOT}/target/site/apidocs</p>
+<h4>OpenAPI documentation</h4>
+<p>After starting the server, Swagger documentation will be available at /openapi/swagger-ui.html
+<br>Yaml OpenAPI files at /openapi/v3/api-docs</p>

@@ -1,7 +1,7 @@
 package com.kotbegemot.testtask1.api.mapper;
 
-import com.kotbegemot.testtask1.api.dto.EditNewsDTO;
 import com.kotbegemot.testtask1.api.dto.NewsDTO;
+import com.kotbegemot.testtask1.api.dto.NewsFormDTO;
 import com.kotbegemot.testtask1.api.entity.News;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Mapper class that transforms different news DTO to {@link com.kotbegemot.testtask1.api.entity.News} or vice versa:
  * <ul>
- *     <li>{@link com.kotbegemot.testtask1.api.dto.EditNewsDTO}</li>
+ *     <li>{@link NewsFormDTO}</li>
  *     <li>{@link com.kotbegemot.testtask1.api.dto.NewsDTO}</li>
  *     <li>{@link com.kotbegemot.testtask1.api.dto.PagedNewsDTO}</li>
  * </ul>
@@ -22,6 +22,7 @@ public interface NewsMapper {
     /**
      * Method that transform single object of type {@link com.kotbegemot.testtask1.api.entity.News} to type {@link com.kotbegemot.testtask1.api.dto.NewsDTO}.
      * Inserts the image ID instead of the image itself
+     *
      * @param news Valid news in database
      * @return NewsDTO object
      */
@@ -33,14 +34,16 @@ public interface NewsMapper {
 
     /**
      * Method that transform list of {@link com.kotbegemot.testtask1.api.entity.News} objects to list of {@link com.kotbegemot.testtask1.api.dto.NewsDTO} objects
+     *
      * @param news List of news entity
      * @return List of news dto
      */
     public List<NewsDTO> newsListToDTO(List<News> news);
 
     /**
-     * Method that transforms single object of type {@link com.kotbegemot.testtask1.api.dto.EditNewsDTO} to entity type {@link com.kotbegemot.testtask1.api.entity.News}.
+     * Method that transforms single object of type {@link NewsFormDTO} to entity type {@link com.kotbegemot.testtask1.api.entity.News}.
      * Insert date and time when the news was received and convert Multipart image to binary format
+     *
      * @param dto Valid news dto
      * @return Entity to save in database
      */
@@ -49,5 +52,5 @@ public interface NewsMapper {
     @Mapping(target = "id", expression = "java(dto.getId() == null ? null : dto.getId())")
     @Mapping(target = "text", source = "text")
     @Mapping(target = "image", expression = "java(new com.kotbegemot.testtask1.api.entity.Image(dto.getImage()))")
-    public News addNewsDTOToEntity(EditNewsDTO dto);
+    public News addNewsDTOToEntity(NewsFormDTO dto);
 }

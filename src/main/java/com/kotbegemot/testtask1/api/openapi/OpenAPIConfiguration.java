@@ -17,8 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
  * Necessary because the object is used for redirection
  */
 @Configuration
-public class OpenAPIConfiguration
-{
+public class OpenAPIConfiguration {
     @Value("${api.common.version}")
     String apiVersion;
     @Value("${api.common.title}")
@@ -35,6 +34,7 @@ public class OpenAPIConfiguration
     String apiContactUrl;
     @Value("${api.common.contact.email}")
     String apiContactEmail;
+
     @Bean
     public OpenAPI getOpenApiDocumentation() {
         AdditionalModelsConverter.replaceWithSchema(ModelAndView.class, new ObjectSchema());

@@ -1,6 +1,7 @@
 FROM maven:3.9.5-eclipse-temurin-17-alpine AS builder
 COPY src /usr/src/app/src
 COPY pom.xml /usr/src/app
+ARG BUILD_PROFILE
 RUN --mount=type=cache,target=/root/.m2 mvn -f /usr/src/app/pom.xml clean verify
 WORKDIR extracted
 RUN java -Djarmode=layertools -jar /usr/src/app/target/*.jar extract
