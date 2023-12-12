@@ -40,7 +40,6 @@ public class NewsServiceImpl implements NewsService {
     public PagedNewsDTO getPageByNumber(Integer pageNumber, Integer pageSize) {
         Pageable page = PageRequest.of(pageNumber, pageSize);
         Page<News> pageResult = newsRepository.findAll(page);
-        logger.debug("{}", pageResult.getContent());
         PageUtils.checkPageNumber(pageResult, pageNumber);
         return new PagedNewsDTO(mapper.newsListToDTO(pageResult.getContent()), pageResult.getSize(), pageResult.getNumber(), pageResult.getTotalPages());
     }
